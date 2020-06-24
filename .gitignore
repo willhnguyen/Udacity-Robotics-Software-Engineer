@@ -36,3 +36,7 @@ build
 
 # ROS
 devel/
+.catkin_workspace
+
+# VS Code
+.vscode/
