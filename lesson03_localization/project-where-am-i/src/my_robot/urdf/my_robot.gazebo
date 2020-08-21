@@ -23,6 +23,7 @@
       <odometrySource>world</odometrySource>
       <publishTf>1</publishTf>
       <publishOdomTF>true</publishOdomTF>
+      <broadcastTF>true</broadcastTF>
     </plugin>
   </gazebo>
 
