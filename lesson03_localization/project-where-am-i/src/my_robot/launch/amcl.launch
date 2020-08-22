@@ -1,7 +1,6 @@
 <launch>
     
     <!-- Map Server -->
-    <!-- <arg name="map_file" default="$(find my_robot)/maps/map.yaml"/> -->
     <arg name="map_file" default="$(find my_robot)/maps/house.yaml"/>
     <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
 
@@ -15,10 +14,10 @@
 
         <!-- AMCL Tuning Parameters -->
         <param name="min_particles" value="100" /> <!-- Default: 100 particles -->
-        <param name="max_particles" value="1000" /> <!-- Default: 5000 particles -->
+        <param name="max_particles" value="5000" /> <!-- Default: 5000 particles -->
         <param name="initial_pose_x" value="0.0" /> <!-- Default: 0.0 meters -->
         <param name="initial_pose_y" value="0.0" /> <!-- Default: 0.0 meters-->
-        <param name="initial_pose_a" value="0.0" /> <!-- Default: 0.0 radians -->
+        <param name="initial_pose_a" value="1.57" /> <!-- Default: 0.0 radians -->
         <param name="update_min_a" value="0.2" /> <!-- Default: 0.2 meters -->
         <param name="update_min_d" value="0.52359878" /> <!-- Default: PI / 6.0 radians -->
 
