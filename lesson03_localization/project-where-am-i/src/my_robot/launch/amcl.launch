@@ -1,7 +1,8 @@
 <launch>
     
     <!-- Map Server -->
-    <arg name="map_file" default="$(find my_robot)/maps/map.yaml"/>
+    <!-- <arg name="map_file" default="$(find my_robot)/maps/map.yaml"/> -->
+    <arg name="map_file" default="$(find my_robot)/maps/house.yaml"/>
     <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
 
     <!-- AMCL Node -->
@@ -12,9 +13,27 @@
         <param name="base_frame_id" value="robot_footprint"/>
         <param name="global_frame_id" value="map"/>
 
-        <!-- If Desired, Add Initial Pose Here, Remember to fill out the value fields! -->
-        <!-- <param name="initial_pose_x" value="<YOUR X VALUE>"/> -->
-        <!-- <param name="initial_pose_y" value="<YOUR Y VALUE>"/> -->
+        <!-- AMCL Tuning Parameters -->
+        <param name="min_particles" value="100" /> <!-- Default: 100 particles -->
+        <param name="max_particles" value="1000" /> <!-- Default: 5000 particles -->
+        <param name="initial_pose_x" value="0.0" /> <!-- Default: 0.0 meters -->
+        <param name="initial_pose_y" value="0.0" /> <!-- Default: 0.0 meters-->
+        <param name="initial_pose_a" value="0.0" /> <!-- Default: 0.0 radians -->
+        <param name="update_min_a" value="0.2" /> <!-- Default: 0.2 meters -->
+        <param name="update_min_d" value="0.52359878" /> <!-- Default: PI / 6.0 radians -->
+
+        <param name="laser_model_type" value="likelihood_field" /> <!-- Default: likelihood_field -->
+        <param name="laser_min_range" value="-1.0" /> <!-- Default: -1.0 (uses laser's reported min range) -->
+        <param name="laser_max_range" value="-1.0" /> <!-- Default: -1.0 (uses laser's reported max range) -->
+        <param name="laser_max_beams" value="30" /> <!-- Default: 30 -->
+        <param name="laser_z_hit" value="0.95" /> <!-- Default: 0.95 -->
+        <param name="laser_z_rand" value="0.05" /> <!-- Default: 0.05 -->
+
+        <param name="odom_alpha_1" value="0.2" /> <!-- Default: 0.2 -->
+        <param name="odom_alpha_2" value="0.2" /> <!-- Default: 0.2 -->
+        <param name="odom_alpha_3" value="0.2" /> <!-- Default: 0.2 -->
+        <param name="odom_alpha_4" value="0.2" /> <!-- Default: 0.2 -->
+
     </node>
 
     <!-- Move Base Node -->
