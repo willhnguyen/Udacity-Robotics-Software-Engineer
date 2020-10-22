@@ -40,6 +40,7 @@ sudo apt-get install ros-kinetic-map-server
 sudo apt-get install ros-kinetic-move-base
 sudo apt-get install ros-kinetic-amcl
 sudo apt-get install protobuf-compiler
+sudo apt-get install ros-kinetic-rtabmap-ros ros-kinetic-rtabmap
 ```
 
 Add to `src/pgm_map_creator/msgs/CMakeLists.txt` with the following
