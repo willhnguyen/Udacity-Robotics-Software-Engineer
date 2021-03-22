@@ -1,6 +1,6 @@
-# Project 3: Where Am I
+# Project 4: Map My World
 
-In this project, I modified an existing project to use the Adaptive Monte Carlo Localization (AMCL) package to localize my robot. Modifications were made to the world in order to generate proper maps that AMCL could use. Screenshots of a few of my runs are provided in the screenshots folder.
+In this project, I modified my localization project to use the RTAB-Map pacakge to create a map as the robot navigates through its environment (house2.world). A screenshot of the robot's final map is provided as `graph.png`.
 
 ## How to Run
 First, build the workspace and source the development environment.
@@ -14,23 +14,25 @@ source devel/setup.bash
 Next, launch each of the following commands in 3 separate terminals.
 ```
 roslaunch my_robot world.launch
-roslaunch my_robot amcl.launch
-rosrun teleop_twist_keyboard teleop_twist_keyboard.py
+roslaunch my_robot teleop.launch  # Or rosrun teleop_twist_keyboard teleop_twist_keyboard.py
+roslaunch my_robot mapping.launch
 ```
 
-In the RViz window, load the `src/config.rviz` configuration file. Under the LaserScan section, set the topic to `/scan`; this field doesn't seem to be saved or loaded by RViz.
+In the teleop terminal, follow the instructions to move the robot around. Watch the RTAB-map view to see the map get generated as the robot navigates through the environment.
 
-In the teleop terminal, follow the instructions to move the robot around. Watch the RViz view to see AMCL narrow down on where the robot is in the map.
+## View Map From Database Log
+A `rtabmap.db` file from a previous run is provided to view the map in the database viewer. Launch the database viewer with the db file to analyze the run.
+
+```
+cd /path/to/project/
+
+rtabmap-databaseViewer rtabmap.db
+```
+
+According to the rtabmap-databaseViewer, there are 20 global loop closures.
 
 ## Things I Noticed
-The robot can usually localize itself by just spinning around. Although this works, it fails when the robot is in areas with not enough uniqueness (i.e. a rectangular room of similar size to another rectangular room). In fact, the robot can localize incorrectly and fail to correct itself over time.
-
-Max particles set to 5000 (default) works pretty well. Lowering it to 1000 can quickly result in incorrect localization and prevent the robot from localizing itself in the future since its pool of available particles limits the amount of random exploration from particle outliers.
-
-Setting the translational movement threshold for filter update seemed to provide more erratic localization, especially when the parameters max and min particles are set too low.
-
-## Future Considerations
-Read up on the AMCL module and understand what each of the parameters do and aim to achieve and how they should be tuned depending on the robot, the sensor, or environment.
+If large structures are repeated, mapping may fail over time. I think the concrete block I have in the scene takes up too much space causing the algorithm to assume certain views are redundant when they aren't necessarily redundant. As a result, the map warps with very large structures that don't provide majorily unique views.
 
 ## Installation Notes
 
@@ -43,16 +45,4 @@ sudo apt-get install protobuf-compiler
 sudo apt-get install ros-kinetic-rtabmap-ros ros-kinetic-rtabmap
 ```
 
-Add to `src/pgm_map_creator/msgs/CMakeLists.txt` with the following
-
-```cmake
-set (msgs
-  collision_map_request.proto
-  ${PROTOBUF_IMPORT_DIRS}/vector2d.proto
-  ${PROTOBUF_IMPORT_DIRS}/header.proto
-  ${PROTOBUF_IMPORT_DIRS}/time.proto
-)
-PROTOBUF_GENERATE_CPP(PROTO_SRCS PROTO_HDRS ${msgs})
-add_library(collision_map_creator_msgs SHARED ${PROTO_SRCS})
-target_link_libraries(collision_map_creator_msgs ${PROTOBUF_LIBRARY})
-```
+Some of the above may be redundant from the previous lesson.

@@ -40,3 +40,6 @@ devel/
 
 # VS Code
 .vscode/
+
+# Map my World
+**/rtabmap.db
